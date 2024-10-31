@@ -12,7 +12,10 @@ const Products = () => {
   const products = useSelector(state => state.products);
   const user = useSelector(state => state.auth);
   const userRole = user.role;
+  const productId = '';
   const [isFormVisible, setIsFormVisible] = useState(false);
+
+  console.log("products", products)
   
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
@@ -24,6 +27,8 @@ const Products = () => {
   };
 
   const handleInspect = (productId) => {
+    // I don't understand why ProductDetails don't render any useState functions, so the spesific product details are fetched here
+    productId = productId
     navigate(`/products/${productId}`);
   };
 
@@ -40,6 +45,10 @@ const Products = () => {
       dispatch(setNotification({ message: 'Failed to add product. Please try again later.', stateType: 'product', requestStatus: 'error' }));
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchProduct(productId));
+  }, [dispatch, productId]);
 
   useEffect(() => {
     dispatch(fetchProducts());

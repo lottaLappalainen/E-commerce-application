@@ -108,7 +108,6 @@ export const fetchProduct = (productId) => async (dispatch) => {
   
   try {
     const response = await axios.get(`http://localhost:3001/api/products/${productId}`);
-    console.log("response", response)
     dispatch(fetchProductSuccess(response.data));
     dispatch(setNotification({ message: 'Product details fetched successfully!', stateType: 'product', requestStatus: 'success' }));
   } catch (error) {

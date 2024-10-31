@@ -9,15 +9,20 @@ const ProductDetails = () => {
   useEffect(() => {
     console.log("moromoro")
   }, []);
+
   const { productId } = useParams();
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   const user = useSelector(state => state.auth);
   const userRole = user?.role || (user && user.user.role) || 'guest';
 
-  dispatch(fetchProduct(productId));
+  useEffect(() => {
+    dispatch(fetchProduct(productId));
+    console.log("moromoro")
+  }, [productId]);
 
   const product = useSelector(state => state.products.product);
+  console.log(product)
   
   const handleAddToCart = () => {
     dispatch(addToCart(product));
@@ -28,9 +33,6 @@ const ProductDetails = () => {
     dispatch(deleteProduct(productId));
     navigateTo('/products');
   };
-
-  if (loading) return <p>Loading product details...</p>;
-  if (!product) return <p>Product not found</p>;
 
   return (
     <div data-testid="inspect-container">
@@ -46,4 +48,9 @@ const ProductDetails = () => {
         ) : (
           <button data-testid="add" onClick={() => handleAddToCart()}>Add to Cart</button>
         )}
-      <
+      </div>
+    </div>
+  );
+};
+
+export default ProductDetails;

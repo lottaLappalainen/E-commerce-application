@@ -11,7 +11,6 @@ const Navbar = () => {
 
   const userRole = user.role 
   const capitalizedRole = userRole.charAt(0).toUpperCase() + userRole.slice(1); 
-  console.log("user", user)
 
   const handleLogout = async () => {
     try {
