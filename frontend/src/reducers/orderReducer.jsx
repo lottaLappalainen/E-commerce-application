@@ -9,14 +9,14 @@ import {
     FETCH_ORDER_SUCCESS,
     FETCH_ORDER_FAILURE
 } from '../actions/orderActions';
-  
+
 const initialState = {
-    orders: [],
-    order: null,
-    loading: false,
-    error: null
+    orders: [],       
+    order: null,     
+    loading: false,   
+    error: null       
 };
-  
+
 const orderReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_ORDERS_REQUEST:
@@ -59,13 +59,14 @@ const orderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: true,
+                order: null,
                 error: null
             };
         case FETCH_ORDER_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                orders: [action.payload]
+                order: action.payload
             };
         case FETCH_ORDER_FAILURE:
             return {
@@ -77,5 +78,5 @@ const orderReducer = (state = initialState, action) => {
             return state;
     }
 };
-  
+
 export default orderReducer;

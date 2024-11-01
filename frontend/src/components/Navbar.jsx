@@ -9,8 +9,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth);
 
-  console.log("user", user)
-
   const userRole = user.role 
   const capitalizedRole = userRole.charAt(0).toUpperCase() + userRole.slice(1); 
 
@@ -58,7 +56,7 @@ const Navbar = () => {
           </React.Fragment>
         )}
       </ul>
-      <div data-testid="profile-container">
+      <div data-testid="role-value">
         {capitalizedRole}
       </div>
     </div>

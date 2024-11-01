@@ -32,6 +32,7 @@ const Cart = () => {
   const handleOrder = async () => {
     if (userRole === 'guest') {
       navigateTo('/login'); 
+    }
     try {
       const items = cartItems.map(item => ({
         product: { 
@@ -42,6 +43,7 @@ const Cart = () => {
         },
         quantity: item.quantity
       }));
+      console.log(items)
   
       dispatch(setNotification({ message: 'Placing order...', stateType: 'order', requestStatus: 'loading' }));
 
@@ -52,7 +54,6 @@ const Cart = () => {
     } catch (error) {
       dispatch(setNotification({ message: 'Error placing order!', stateType: 'order', requestStatus: 'error' }));
     }
-  }
   };
 
   return (

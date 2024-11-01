@@ -1,15 +1,21 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchOrders } from '../actions/orderActions';
-import { setNotification } from '../actions/notificationActions'; 
+import { fetchOrders, fetchOrder } from '../actions/orderActions';
+import { useNavigate } from 'react-router-dom';
 
 const Orders = () => {
   const dispatch = useDispatch();
-  const { orders, loading, error } = useSelector(state => state.orders);
+  const navigate = useNavigate();
+  const { orders } = useSelector(state => state.orders);
 
   useEffect(() => {
     dispatch(fetchOrders());
   }, [dispatch]); 
+  
+  const handleInspectOrder = async (orderId) => {
+    await dispatch(fetchOrder(orderId));  
+    navigate(`/orders/${orderId}`); 
+  };
 
   return (
     <div data-testid="main-container"> 
@@ -20,9 +26,12 @@ const Orders = () => {
           {orders.map(order => (
             <div key={order.id} data-testid={`list-item-${order.id}-container`}>
               <p data-testid={`id-value`}>{order.id}</p>
-              <a href={`/orders/${order.id}`} data-testid={`inspect-${order.id}-link`}>
+              <button 
+                onClick={() => handleInspectOrder(order.id)} 
+                data-testid={`inspect-${order.id}-link`}
+              >
                 Inspect Order
-              </a>
+              </button>
             </div>
           ))}
         </div>

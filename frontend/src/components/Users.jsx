@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUsers, deleteUser } from '../actions/usersActions';
+import { fetchUsers, deleteUser, fetchUser } from '../actions/usersActions'; 
 import { Link, useNavigate } from 'react-router-dom';
 
 const Users = () => {
@@ -18,6 +18,16 @@ const Users = () => {
     }
   };
 
+  const handleInspect = (userId) => {
+    dispatch(fetchUser(userId)); 
+    navigateTo(`/users/${userId}`); 
+  };
+
+  const handleModify = (userId) => {
+    dispatch(fetchUser(userId)); 
+    navigateTo(`/users/${userId}/modify`); 
+  };
+
   return (
     <div data-testid="main-container">
       {users.length === 0 ? (
@@ -28,8 +38,8 @@ const Users = () => {
             <li key={user.id} data-testid={`list-item-${user.id}-container`}>
               <h3 data-testid="name-value">{user.name}</h3>
               <p data-testid="role-value">{user.role}</p>
-              <Link to={`/users/${user.id}`}>Inspect</Link>
-              <button data-testid="modify" onClick={() => navigateTo(`/users/${user.id}/modify`)}>Modify</button>
+              <button data-testid="inspect" onClick={() => handleInspect(user.id)}>Inspect</button>
+              <button data-testid="modify" onClick={() => handleModify(user.id)}>Modify</button>
               <button data-testid="delete" onClick={() => handleDelete(user.id)}>Delete</button>
             </li>
           ))}

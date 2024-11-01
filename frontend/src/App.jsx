@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Navbar from "./components/Navbar";
 import Cart from './components/Cart';
 import RegisterForm from "./components/RegisterForm";
@@ -16,9 +16,16 @@ import ProductDetails from './components/ProductDetails';
 import Users from './components/Users';
 import UserDetails from './components/UserDetails';
 import UserModify from './components/UserModify';
+import { fetchUserStatus} from './actions/authActions.jsx';
 
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserStatus());
+  }, [dispatch]);
+
   const notification = useSelector(state => state.notification);
 
   return (
