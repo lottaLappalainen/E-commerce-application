@@ -38,6 +38,7 @@ const UserModify = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("formdata", formData)
     dispatch(modifyUser(formData));
     navigate(-1); 
   };

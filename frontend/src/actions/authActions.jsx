@@ -13,6 +13,7 @@ export const fetchUserStatus = () => async (dispatch) => {
       type: FETCH_USER_STATUS,
       payload: response.data.user, 
     });
+    
   } catch (error) {
     console.error('Error checking authentication status:', error);
   }
@@ -25,7 +26,6 @@ export const loginUser = (userData) => async (dispatch) => {
       type: LOGIN_USER,
       payload: response.data,
     });
-    console.log(response.data);
     return response.data; 
   } catch (error) {
     throw error;

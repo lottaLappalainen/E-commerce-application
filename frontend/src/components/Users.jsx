@@ -6,14 +6,13 @@ import { Link, useNavigate } from 'react-router-dom';
 const Users = () => {
   const dispatch = useDispatch();
   const users = useSelector(state => state.users);
-  console.log(users);
   const navigateTo = useNavigate();
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  const handleDelete = () => {
+  const handleDelete = (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       dispatch(deleteUser(userId)); 
     }

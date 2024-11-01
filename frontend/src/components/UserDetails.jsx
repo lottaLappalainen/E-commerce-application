@@ -32,7 +32,7 @@ const UserDetails = () => {
     return <div>Loading...</div>; 
   }
 
-  const handleDelete = () => {
+  const handleDelete = (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       dispatch(deleteUser(userId)); 
       navigateTo('/users');

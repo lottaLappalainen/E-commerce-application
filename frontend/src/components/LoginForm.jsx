@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'; 
 import { setNotification } from '../actions/notificationActions';
-import { loginUser } from '../actions/authActions';
+import { loginUser, fetchUserStatus } from '../actions/authActions';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,8 @@ const Login = () => {
 
     try {
       dispatch(setNotification({ message: 'Logging in...', stateType: 'auth', requestStatus: 'loading' }));
-      const response = await dispatch(loginUser(formData)); 
+      const response = await dispatch(loginUser(formData));
+      await dispatch(fetchUserStatus());
       dispatch(setNotification({ message: 'Login successful', stateType: 'auth', requestStatus: 'success' }));
       navigateTo('/');
     } catch (error) {

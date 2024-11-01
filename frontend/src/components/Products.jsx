@@ -14,8 +14,6 @@ const Products = () => {
   const userRole = user.role;
   const productId = '';
   const [isFormVisible, setIsFormVisible] = useState(false);
-
-  console.log("products", products)
   
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));

@@ -28,7 +28,6 @@ const OrderDetails = () => {
     fetchOrder();
   }, [dispatch, orderId]);
 
-  // Dispatch loading notification only when loading
   useEffect(() => {
     if (loading) {
       dispatch(setNotification({ message: 'Getting order...', stateType: 'order', requestStatus: 'loading' }));

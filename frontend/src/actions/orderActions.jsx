@@ -1,22 +1,18 @@
 import axios from '../axiosConfig';
 import { setNotification } from '../actions/notificationActions'; 
 
-// Action types for fetching orders
 export const FETCH_ORDERS_REQUEST = 'FETCH_ORDERS_REQUEST';
 export const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
 export const FETCH_ORDERS_FAILURE = 'FETCH_ORDERS_FAILURE';
 
-// Action types for adding an order
 export const ADD_ORDER_REQUEST = 'ADD_ORDER_REQUEST';
 export const ADD_ORDER_SUCCESS = 'ADD_ORDER_SUCCESS';
 export const ADD_ORDER_FAILURE = 'ADD_ORDER_FAILURE';
 
-// Action types for fetching a single order
 export const FETCH_ORDER_REQUEST = 'FETCH_ORDER_REQUEST';
 export const FETCH_ORDER_SUCCESS = 'FETCH_ORDER_SUCCESS';
 export const FETCH_ORDER_FAILURE = 'FETCH_ORDER_FAILURE';
 
-// Action creator to fetch a single order
 export const fetchOrderRequest = () => ({
     type: FETCH_ORDER_REQUEST,
 });
