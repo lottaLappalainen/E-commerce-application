@@ -3,8 +3,8 @@ import React from 'react';
 const HomePage = () => {
   return (
     <div data-testid="main-container">
-      <h1>Welcome to our website!</h1>
-      <p>Some introductory text...</p>
+      <h1>Online store</h1>
+      <p>For some random products</p>
     </div>
   );
 };

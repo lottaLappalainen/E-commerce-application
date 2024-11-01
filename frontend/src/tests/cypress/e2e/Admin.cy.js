@@ -50,11 +50,7 @@ describe("END-TO-END - ADMIN", () => {
     login(credentials.admin);
   });
 
-  describe("Navigation and Other UI Elements'", () => {
-    it('Role is "admin" after successful login', () => {
-      testRoleIsCorrect("admin"); // THIS IS A NEW REQUIREMENT: REMEMBER TO TAKE INTO ACCOUNT IN DOCUMENTATION!!
-      logOut();
-    });
+  describe("Navigation", () => {
     it("Navigation is shown correctly after successful admin login", () => {
       testNavigationIsFor("admin");
       logOut();

@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchOrder } from '../actions/orderActions';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
-  const { orderId } = useParams();
-  const dispatch = useDispatch();
   const order = useSelector(state => state.orders.order);
 
   return (

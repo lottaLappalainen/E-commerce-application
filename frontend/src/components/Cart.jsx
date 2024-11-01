@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, updateQuantity, clearCart } from '../actions/cartActions';
 import { useNavigate } from 'react-router-dom';

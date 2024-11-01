@@ -31,7 +31,7 @@ const Login = () => {
 
     try {
       dispatch(setNotification({ message: 'Logging in...', stateType: 'auth', requestStatus: 'loading' }));
-      const response = await dispatch(loginUser(formData));
+      await dispatch(loginUser(formData));
       await dispatch(fetchUserStatus());
       dispatch(setNotification({ message: 'Login successful', stateType: 'auth', requestStatus: 'success' }));
       navigateTo('/');

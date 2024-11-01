@@ -1,91 +1,24 @@
 import axios from '../axiosConfig';
 import { setNotification } from '../actions/notificationActions';
 
-export const FETCH_ORDERS_REQUEST = 'FETCH_ORDERS_REQUEST';
-export const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
-export const FETCH_ORDERS_FAILURE = 'FETCH_ORDERS_FAILURE';
+export const FETCH_ORDERS = 'FETCH_ORDERS';
+export const ADD_ORDER = 'ADD_ORDER';
+export const FETCH_ORDER = 'FETCH_ORDER';
 
-export const ADD_ORDER_REQUEST = 'ADD_ORDER_REQUEST';
-export const ADD_ORDER_SUCCESS = 'ADD_ORDER_SUCCESS';
-export const ADD_ORDER_FAILURE = 'ADD_ORDER_FAILURE';
-
-export const FETCH_ORDER_REQUEST = 'FETCH_ORDER_REQUEST';
-export const FETCH_ORDER_SUCCESS = 'FETCH_ORDER_SUCCESS';
-export const FETCH_ORDER_FAILURE = 'FETCH_ORDER_FAILURE';
-
-export const fetchOrders = () => async (dispatch) => {
-    dispatch({ type: FETCH_ORDERS_REQUEST });
-    dispatch(setNotification({ message: 'Fetching orders...', stateType: 'order', requestStatus: 'loading' }));
+const createAsyncAction = (type, requestFunction) => async (dispatch, ...args) => {
+    dispatch(setNotification({ message: `${type.toLowerCase()}...`, stateType: 'order', requestStatus: 'loading' }));
     try {
-        const response = await axios.get('http://localhost:3001/api/orders');
-        dispatch({
-            type: FETCH_ORDERS_SUCCESS,
-            payload: response.data
-        });
-        dispatch(setNotification({ message: 'Orders fetched successfully!', stateType: 'order', requestStatus: 'success' }));
+        const response = await requestFunction(...args);
+        dispatch({ type: `${type}_SUCCESS`, payload: response.data });
+        dispatch(setNotification({ message: `${type.toLowerCase()} successfully!`, stateType: 'order', requestStatus: 'success' }));
     } catch (error) {
-        dispatch({
-            type: FETCH_ORDERS_FAILURE,
-            payload: error.message
-        });
-        dispatch(setNotification({ message: 'Failed to fetch orders. Please try again later.', stateType: 'order', requestStatus: 'error' }));
+        dispatch({ type: `${type}_FAILURE`, payload: error.message });
+        dispatch(setNotification({ message: `Failed to ${type.toLowerCase()}. Please try again later.`, stateType: 'order', requestStatus: 'error' }));
     }
 };
 
-export const fetchOrderRequest = () => ({
-    type: FETCH_ORDER_REQUEST,
-});
+export const fetchOrders = () => createAsyncAction(FETCH_ORDERS, () => axios.get('http://localhost:3001/api/orders'));
 
-export const fetchOrderSuccess = (order) => ({
-    type: FETCH_ORDER_SUCCESS,
-    payload: order,
-});
+export const fetchOrder = (orderId) => createAsyncAction(FETCH_ORDER, () => axios.get(`http://localhost:3001/api/orders/${orderId}`));
 
-export const fetchOrderFailure = (error) => ({
-    type: FETCH_ORDER_FAILURE,
-    payload: error,
-});
-
-export const fetchOrder = (orderId) => async (dispatch) => {
-    dispatch(fetchOrderRequest());
-    dispatch(setNotification({ message: 'Fetching order...', stateType: 'order', requestStatus: 'loading' }));
-    try {
-        const response = await axios.get(`http://localhost:3001/api/orders/${orderId}`);
-        dispatch(fetchOrderSuccess(response.data));
-        dispatch(setNotification({ message: 'Order fetched successfully!', stateType: 'order', requestStatus: 'success' }));
-    } catch (error) {
-        dispatch(fetchOrderFailure(error.message));
-        dispatch(setNotification({ message: 'Failed to fetch order. Please try again later.', stateType: 'order', requestStatus: 'error' }));
-    }
-};
-
-export const addOrderRequest = () => ({
-    type: ADD_ORDER_REQUEST,
-});
-
-export const addOrderSuccess = (order) => ({
-    type: ADD_ORDER_SUCCESS,
-    payload: order,
-});
-
-export const addOrderFailure = (error) => ({
-    type: ADD_ORDER_FAILURE,
-    payload: error,
-});
-
-export const addOrder = (orderData) => async (dispatch) => {
-    dispatch(addOrderRequest());
-    dispatch(setNotification({ message: 'Adding order...', stateType: 'order', requestStatus: 'loading' }));
-    try {
-        const response = await axios.post('http://localhost:3001/api/orders', orderData);
-        const newOrder = response.data;
-
-        dispatch(addOrderSuccess(newOrder));
-        dispatch(setNotification({ message: 'Order added successfully!', stateType: 'order', requestStatus: 'success' }));
-        return newOrder;
-    } catch (error) {
-        dispatch(addOrderFailure(error.message));
-        dispatch(setNotification({ message: 'Failed to add order. Please try again later.', stateType: 'order', requestStatus: 'error' }));
-        throw error;
-    }
-};
+export const addOrder = (orderData) => createAsyncAction(ADD_ORDER, () => axios.post('http://localhost:3001/api/orders', orderData));

@@ -1,5 +1,3 @@
-// ModifyProduct.js
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -17,7 +15,6 @@ const ModifyProduct = () => {
     price: '',
   });
 
-  // Fetch product details and populate the form
   useEffect(() => {
     const fetchProductDetails = async () => {
     dispatch(setNotification({ message: 'Getting product...', stateType: 'product', requestStatus: 'loading' }));
@@ -46,9 +43,9 @@ const ModifyProduct = () => {
     e.preventDefault();
     dispatch(setNotification({ message: 'Updating product...', stateType: 'product', requestStatus: 'loading' }));
     try {
-      const response = await axios.put(`http://localhost:3001/api/products/${productId}`, formData);
+      await axios.put(`http://localhost:3001/api/products/${productId}`, formData);
       dispatch(setNotification({ message: 'Updated product succesfuly!', stateType: 'product', requestStatus: 'success' }));
-      navigateTo('/products');
+      navigateTo(`/products/:${productId}`);
     } catch (error) {
         dispatch(setNotification({ message: 'Error updating the product', stateType: 'product', requestStatus: 'error' }));
     }

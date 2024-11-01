@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUsers, deleteUser, fetchUser } from '../actions/usersActions'; 
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Users = () => {
   const dispatch = useDispatch();
   const users = useSelector(state => state.users);
   const navigateTo = useNavigate();
+  const currentUserId = useSelector(state => state.auth.id); 
+  const user = useSelector(state => state.users.user);
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -18,13 +20,13 @@ const Users = () => {
     }
   };
 
-  const handleInspect = (userId) => {
-    dispatch(fetchUser(userId)); 
+  const handleInspect = async(userId) => {
+    await dispatch(fetchUser(userId)); 
     navigateTo(`/users/${userId}`); 
   };
 
-  const handleModify = (userId) => {
-    dispatch(fetchUser(userId)); 
+  const handleModify = async (userId) => {
+    await dispatch(fetchUser(userId)); 
     navigateTo(`/users/${userId}/modify`); 
   };
 
@@ -39,8 +41,20 @@ const Users = () => {
               <h3 data-testid="name-value">{user.name}</h3>
               <p data-testid="role-value">{user.role}</p>
               <button data-testid="inspect" onClick={() => handleInspect(user.id)}>Inspect</button>
-              <button data-testid="modify" onClick={() => handleModify(user.id)}>Modify</button>
-              <button data-testid="delete" onClick={() => handleDelete(user.id)}>Delete</button>
+              <button 
+                data-testid="modify" 
+                onClick={() => handleModify(user.id)} 
+                disabled={user.id === currentUserId} 
+              >
+                Modify
+              </button>
+              <button 
+                data-testid="delete" 
+                onClick={() => handleDelete(user.id)} 
+                disabled={user.id === currentUserId} 
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from "../axiosConfig.js";
-import { stateTypes, validEmailRegex } from "../tests/constants/components.js";
+import { validEmailRegex } from "../tests/constants/components.js";
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../actions/notificationActions.jsx';
-import { registerUser } from '../actions/authActions.jsx';
+import { registerUser, fetchUserStatus } from '../actions/authActions.jsx';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -46,14 +45,14 @@ const Register = () => {
       dispatch(setNotification({ message: 'Registering...', stateType: 'auth', requestStatus: 'loading' }));
       const { passwordConfirmation, ...requestData } = formData;
       await dispatch(registerUser(requestData));
-  
+      navigateTo('/products');
       dispatch(setNotification({ message: 'Registration successful', stateType: 'auth', requestStatus: 'success' }));
-  
-      navigateTo('/login');
+      await dispatch(fetchUserStatus());
     }catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        dispatch(setNotification({ message: error.response.data.error, stateType: 'auth', requestStatus: 'error' }));
+      if (error.response && error.response.data) {
+        dispatch(setNotification({ message: 'Email is already in use', stateType: 'auth', requestStatus: 'error' }));
       } else {
+        console.log(error)
         dispatch(setNotification({ message: 'An error occurred while registering. Please try again later.', stateType: 'auth', requestStatus: 'error' }));
       }
     }
