@@ -45,7 +45,7 @@ const ModifyProduct = () => {
     try {
       await axios.put(`http://localhost:3001/api/products/${productId}`, formData);
       dispatch(setNotification({ message: 'Updated product succesfuly!', stateType: 'product', requestStatus: 'success' }));
-      navigateTo(`/products/:${productId}`);
+      navigateTo(`/products/${productId}`);
     } catch (error) {
         dispatch(setNotification({ message: 'Error updating the product', stateType: 'product', requestStatus: 'error' }));
     }

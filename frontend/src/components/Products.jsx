@@ -24,7 +24,6 @@ const Products = () => {
   };
 
   const handleInspect = async (productId) => {
-    await dispatch(fetchProduct(productId));
     navigate(`/products/${productId}`);
   };
 

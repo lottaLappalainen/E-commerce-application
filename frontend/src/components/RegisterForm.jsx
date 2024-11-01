@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { validEmailRegex } from "../tests/constants/components.js";
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../actions/notificationActions.jsx';
@@ -13,7 +12,6 @@ const Register = () => {
     passwordConfirmation: '',
   });
 
-  const navigateTo = useNavigate();
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -45,7 +43,6 @@ const Register = () => {
       dispatch(setNotification({ message: 'Registering...', stateType: 'auth', requestStatus: 'loading' }));
       const { passwordConfirmation, ...requestData } = formData;
       await dispatch(registerUser(requestData));
-      navigateTo('/products');
       dispatch(setNotification({ message: 'Registration successful', stateType: 'auth', requestStatus: 'success' }));
       await dispatch(fetchUserStatus());
     }catch (error) {

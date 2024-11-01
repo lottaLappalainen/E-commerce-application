@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchOrders, fetchOrder } from '../actions/orderActions';
+import { fetchOrders } from '../actions/orderActions';
 import { useNavigate } from 'react-router-dom';
 
 const Orders = () => {
@@ -13,7 +13,6 @@ const Orders = () => {
   }, [dispatch]); 
   
   const handleInspectOrder = async (orderId) => {
-    await dispatch(fetchOrder(orderId));  
     navigate(`/orders/${orderId}`); 
   };
 

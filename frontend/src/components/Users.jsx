@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUsers, deleteUser, fetchUser } from '../actions/usersActions'; 
-import { useNavigate } from 'react-router-dom';
+import { fetchUsers, deleteUser } from '../actions/usersActions';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Users = () => {
   const dispatch = useDispatch();
   const users = useSelector(state => state.users);
   const navigateTo = useNavigate();
-  const currentUserId = useSelector(state => state.auth.id); 
-  const user = useSelector(state => state.users.user);
+  const currentUserId = useSelector(state => state.auth.id);
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -16,18 +15,8 @@ const Users = () => {
 
   const handleDelete = (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
-      dispatch(deleteUser(userId)); 
+      dispatch(deleteUser(userId));
     }
-  };
-
-  const handleInspect = async(userId) => {
-    await dispatch(fetchUser(userId)); 
-    navigateTo(`/users/${userId}`); 
-  };
-
-  const handleModify = async (userId) => {
-    await dispatch(fetchUser(userId)); 
-    navigateTo(`/users/${userId}/modify`); 
   };
 
   return (
@@ -40,18 +29,18 @@ const Users = () => {
             <li key={user.id} data-testid={`list-item-${user.id}-container`}>
               <h3 data-testid="name-value">{user.name}</h3>
               <p data-testid="role-value">{user.role}</p>
-              <button data-testid="inspect" onClick={() => handleInspect(user.id)}>Inspect</button>
-              <button 
-                data-testid="modify" 
-                onClick={() => handleModify(user.id)} 
-                disabled={user.id === currentUserId} 
+              <Link to={`/users/${user.id}`} data-testid="inspect">Inspect</Link>
+              <button
+                data-testid="modify"
+                onClick={() => navigateTo(`/users/${user.id}/modify`)}
+                disabled={user.id === currentUserId}
               >
                 Modify
               </button>
-              <button 
-                data-testid="delete" 
-                onClick={() => handleDelete(user.id)} 
-                disabled={user.id === currentUserId} 
+              <button
+                data-testid="delete"
+                onClick={() => handleDelete(user.id)}
+                disabled={user.id === currentUserId}
               >
                 Delete
               </button>

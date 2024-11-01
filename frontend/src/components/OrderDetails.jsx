@@ -1,8 +1,25 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchOrder } from '../actions/orderActions';
+import { useParams } from 'react-router-dom';
 
 const OrderDetails = () => {
+  const { orderId } = useParams();
+  const dispatch = useDispatch();
   const order = useSelector(state => state.orders.order);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getOrderDetails = async () => {
+        await dispatch(fetchOrder(orderId)); 
+        setLoading(false); 
+    };
+    getOrderDetails(); 
+  }, [dispatch, orderId]); 
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div data-testid="inspect-container">
