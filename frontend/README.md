@@ -2,8 +2,6 @@
 
 # Instructions
 
-If you choose to do the project with the React frontend, you will need to follow the instructions below.
-
 ## Starting server backend
 
 The backend for the assignment is located inside the the directory `assignment/backend`
