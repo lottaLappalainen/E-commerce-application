@@ -4,8 +4,8 @@ This repository is for the **Advanced Web Front-ends** course assignment at Tamp
 
 ## Project Structure
 The project is organized as follows:
-- **Frontend**: Located in `assignment/react_frontend`, handles the user interface and interacts with the backend.
-- **Backend**: Located in `assignment/backend`, provides an API for managing products and users, and uses JWT tokens for authentication.
+- **Frontend**: Located in `E-commerce-application/react_frontend`, handles the user interface and interacts with the backend.
+- **Backend**: Located in `E-commerce-application/backend`, provides an API for managing products and users, and uses JWT tokens for authentication.
 
 The backend in this repository is Tampere University copyrighted and is provided solely for course use.
 
@@ -16,5 +16,5 @@ Ensure that you have the following installed:
 ## License
 The backend component of this project is © 2024 Tampere University and is provided solely for educational use within the Advanced Web Front-ends course.
 
-For additional information, refer to assignment/backend/README.md for backend details and assignment/react_frontend/README.md for frontend instructions.
+For additional information, refer to E-commerce-application/backend/README.md for backend details and E-commerce-application/react_frontend/README.md for frontend instructions.
 
